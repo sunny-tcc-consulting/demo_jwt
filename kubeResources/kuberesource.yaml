@@ -1,0 +1,245 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+    creationTimestamp: "2020-07-09T06:13:46Z"
+    generation: 1
+    labels:
+      app: myapp
+    managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:app: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector:
+            f:matchLabels:
+              .: {}
+              f:app: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:app: {}
+            f:spec:
+              f:containers:
+                k:{"name":"myapp"}:
+                  .: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: kubectl
+      operation: Update
+      time: "2020-07-09T06:13:46Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: "2020-07-09T07:16:40Z"
+    name: myapp
+    namespace: myapp
+    resourceVersion: "154321"
+    selfLink: /apis/apps/v1/namespaces/myapp/deployments/myapp
+    uid: 7d2aa8e3-3229-46c8-8d79-71805adee28c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: myapp
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: myapp
+      spec:
+        containers:
+        - image: tccsunny/myapp
+          imagePullPolicy: Always
+          name: myapp
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-09T06:13:46Z"
+      lastUpdateTime: "2020-07-09T06:13:56Z"
+      message: ReplicaSet "myapp-68dd9d6bd8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2020-07-09T07:16:40Z"
+      lastUpdateTime: "2020-07-09T07:16:40Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2020-07-09T06:04:21Z"
+    labels:
+      app: myapp
+    managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:labels:
+            .: {}
+            f:app: {}
+        f:spec:
+          f:ports:
+            .: {}
+            k:{"port":8080,"protocol":"TCP"}:
+              .: {}
+              f:name: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector:
+            .: {}
+            f:app: {}
+          f:sessionAffinity: {}
+          f:type: {}
+      manager: kubectl
+      operation: Update
+      time: "2020-07-09T06:04:21Z"
+    name: myapp
+    namespace: myapp
+    resourceVersion: "142641"
+    selfLink: /api/v1/namespaces/myapp/services/myapp
+    uid: 1569e115-2f22-452e-835c-e6d989da5eb6
+  spec:
+    clusterIP: 10.99.233.157
+    ports:
+    - name: 8080-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: myapp
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.k8s.io/v1beta1","kind":"Ingress","metadata":{"annotations":{},"name":"myapp","namespace":"myapp"},"spec":{"rules":[{"host":"myapp.192.168.87.245.nip.io","http":{"paths":[{"backend":{"serviceName":"myapp","servicePort":8080}}]}}]}}
+    creationTimestamp: "2020-07-09T06:20:23Z"
+    generation: 1
+    managedFields:
+    - apiVersion: networking.k8s.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          f:rules: {}
+      manager: kubectl
+      operation: Update
+      time: "2020-07-09T06:20:23Z"
+    - apiVersion: extensions/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:loadBalancer:
+            f:ingress: {}
+      manager: haproxy-ingress-controller
+      operation: Update
+      time: "2020-07-09T06:21:02Z"
+    name: myapp
+    namespace: myapp
+    resourceVersion: "145228"
+    selfLink: /apis/extensions/v1beta1/namespaces/myapp/ingresses/myapp
+    uid: 457bb299-1024-4af8-8554-818d6b68af21
+  spec:
+    rules:
+    - host: myapp.192.168.87.245.nip.io
+      http:
+        paths:
+        - backend:
+            serviceName: myapp
+            servicePort: 8080
+          pathType: ImplementationSpecific
+  status:
+    loadBalancer:
+      ingress:
+      - {}
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
